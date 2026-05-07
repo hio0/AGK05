@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GunManager : MonoBehaviour
 {
-    public Sprite sprite;
+    public SpriteRenderer sprite;
     public PolygonCollider2D cl;
     public Rigidbody2D rb;
 }
