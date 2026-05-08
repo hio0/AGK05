@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class GunMove : GunManager
 {
     public float movespeed;
+    public float spinspeed;
     public float jumpforce;
 
     bool isjump;
@@ -18,50 +20,62 @@ public class GunMove : GunManager
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-
-        if (x != 0)
+        if (isjump && rb.velocity.sqrMagnitude > 0.1) // 공중에서 회전을 멈추지 않게 / 움직일 경우 회전을 하게 하는 코드.
         {
-            transform.position = new Vector2(transform.position.x + x * movespeed * Time.deltaTime, transform.position.y);
+            transform.Rotate(0, 0, spinspeed);
+        }
+    }
 
-            //float spin = Mathf.Atan2(1, moveDir.x) * Mathf.Rad2Deg; //Atan2는 y, x 값을 좌표 평면 상의 각도로 전환, Rad2Deg는 그 각도를 유니티용으로 변환(Atan2 쓸거면 반드시 써야함).
-
-            float whatspin = 0;
-            if (x < 0)
-            {
-                whatspin = -360f;
-            }
-            else
-            {
-                whatspin = 360f;
-            }
-
-            transform.rotation = Quaternion.Euler(0, 0, x + Time.time * whatspin); // rotation.z에 각도를 계속 넣기.
-
-            if (transform.position.y < -3)
-            {
-                transform.position = new Vector2(transform.position.x, -3f);
-            }
+    public void Move(Vector2 vec)
+    {
+        float moving = movespeed;
+        if(isjump)
+        {
+            moving = moving / 3; // 공중 이동 제한
         }
 
+        if (vec == Vector2.left)
+        {
+            spinspeed = moving * 2;
+            rb.AddForce(Vector2.left * moving);
+            //rb.velocity = new Vector2(x * movespeed, rb.velocity.y);
+        }
+        else if (vec == Vector2.right)
+        {
+            spinspeed = -moving * 2;
+            rb.AddForce(Vector2.right * moving);
+        }
+        else
+        {
+            Debug.Log("아무것도 없잖아;;");
+        }
 
+        transform.Rotate(0, 0, spinspeed);
     }
 
     public void Jump()
     {
-        if (isjump)
+        if (!isjump)
         {
-            rb.AddForce(Vector2.up * jumpforce * Time.deltaTime, ForceMode2D.Impulse);
-            isjump = false;
+            //rb.velocity = new Vector2(rb.velocity.x, jumpforce);
+            rb.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
+            isjump = true;
 
+            rb.drag = 0.5f;
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    public void Shot()
+    {
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "stage")
         {
-            isjump = true;
+            isjump = false;
+            rb.drag = 2f;
         }
     }
 }
