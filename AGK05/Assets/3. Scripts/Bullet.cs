@@ -22,6 +22,16 @@ public class Bullet : MonoBehaviour
         rb.velocity = path * bulletspeed;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject);
+
+        if(collision.gameObject.name == "enemy")
+        {
+
+        }
+    }
+
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
