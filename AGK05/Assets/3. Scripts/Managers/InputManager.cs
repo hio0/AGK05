@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public GunMove gunmove;
+    public Gun gun;
 
     // Start is called before the first frame update
     void Start()
@@ -18,23 +18,23 @@ public class InputManager : MonoBehaviour
         // 이동
         if(Input.GetKey(KeyCode.A))
         {
-            gunmove.Move(Vector2.left);
+            gun.Move(Vector2.left);
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
-            gunmove.Move(Vector2.left);
+            gun.Move(Vector2.right);
         }
 
         // 점프
         if(Input.GetKeyDown(KeyCode.W))
         {
-            gunmove.Jump();
+            gun.Jump();
         }
 
         // 발사
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            gunmove.Shot();
+            gun.Shot();
         }
     }
 }
