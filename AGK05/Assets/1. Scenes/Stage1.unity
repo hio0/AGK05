@@ -336,17 +336,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a836ecacfd76436419391d2b2c0e27fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gundata: {fileID: 11400000, guid: de4550038012b8a4197a2ac21e8a0678, type: 2}
   rb: {fileID: 38892010}
   movespeed: 2
   spinspeed: 0
   spingajungchi: 1.5
   jumpforce: 6
-  isjump: 0
   bullet: {fileID: 1329884016279488887, guid: c1ddd381358b7a248a9b3e87f2d24ebe, type: 3}
-  shotpoint: {fileID: 889435663}
-  maxbullet: 12
   bulletcount: 0
-  _nextshottime: 1.5
 --- !u!1 &81615000
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,8 +793,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889435662}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.95, y: 0.21, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.95, y: 0.21000004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

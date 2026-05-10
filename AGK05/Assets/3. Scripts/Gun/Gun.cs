@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Gun : MonoBehaviour
 {
+    public GunData gundata;
     public Rigidbody2D rb;
     
     public float movespeed;
@@ -11,35 +13,32 @@ public class Gun : MonoBehaviour
     public float spingajungchi;
     public float jumpforce;
 
-    public bool isjump;
+    bool isjump;
 
     public GameObject bullet;
-    public Transform shotpoint;
-    public int maxbullet;
     public int bulletcount;
-    public float _nextshottime;
-    float nextshottime;
+    float nextshot;
     bool isshot;
 
     // Start is called before the first frame update
     void Start()
     {
-        bulletcount = maxbullet;
+        SetNewData(gundata);
     }
 
     void Update()
     {
-        if (isjump && rb.velocity.sqrMagnitude > 0) // 공중에서 회전을 멈추지 않게 / 움직일 경우 회전을 하게 하는 코드.
+        if (isjump && rb.velocity.sqrMagnitude > 0) // sqrMagnitude: 움직임을 감지.
         {
             transform.Rotate(0, 0, spinspeed);
         }
 
         if (isshot)
         {
-            nextshottime -= Time.deltaTime;
-            if(nextshottime <= 0)
+            nextshot -= Time.deltaTime;
+            if(nextshot <= 0)
             {
-                nextshottime = 0;
+                nextshot = 0;
                 isshot = false;
             }
         }
@@ -50,7 +49,7 @@ public class Gun : MonoBehaviour
         float moving = movespeed;
         if (isjump)
         {
-            moving = moving / 3; // 공중 이동 제한
+            moving = moving / 3;
         }
 
         if (vec == Vector2.left)
@@ -85,20 +84,37 @@ public class Gun : MonoBehaviour
 
     public void Shot()
     {
+        Transform t = null;
+        t.position = gundata.shotpoint;
+
         if(bulletcount > 0 && !isshot)
         {
             Quaternion quar = Quaternion.Euler(0, 0, transform.eulerAngles.z);
 
-            GameObject b = Instantiate(bullet, shotpoint.position, quar);
+            GameObject b = Instantiate(bullet, t.position, quar);
             b.transform.Rotate(0, 0, -90);
-            b.GetComponent<Bullet>().path = shotpoint.right;
+            b.GetComponent<Bullet>().path = t.right;
 
-            rb.AddForce(-shotpoint.right * 5f, ForceMode2D.Impulse);
+            rb.AddForce(-t.right * 5f, ForceMode2D.Impulse);
             
             bulletcount--;
-            nextshottime = _nextshottime;
+            nextshot = gundata.nextshottime;
             isshot = true;
         }
+    }
+
+    public void SetNewData(GunData data)
+    {
+        gundata = data;
+
+        gameObject.GetComponent<SpriteRenderer>().sprite = data.gunsprite;
+        data.shotpoint = gameObject.transform.InverseTransformPoint(gundata.shotpoint);
+
+        if(bulletcount >= data.maxbullet)
+        {
+            bulletcount = data.maxbullet;
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
