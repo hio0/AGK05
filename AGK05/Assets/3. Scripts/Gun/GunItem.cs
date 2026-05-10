@@ -20,10 +20,13 @@ public class GunItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if(collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<Gun>().SetNewData(gundata);
-            Destroy(gameObject);
+            if(collision.GetComponent<Gun>().gundata != gundata)
+            {
+                collision.GetComponent<Gun>().SetNewData(gundata);
+                Destroy(gameObject);
+            }
         }
     }
 }

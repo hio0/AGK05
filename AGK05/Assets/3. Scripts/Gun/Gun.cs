@@ -7,7 +7,7 @@ public class Gun : MonoBehaviour
 {
     public GunData gundata;
     public Rigidbody2D rb;
-    
+
     public float movespeed;
     public float spinspeed;
     public float spingajungchi;
@@ -15,6 +15,7 @@ public class Gun : MonoBehaviour
 
     bool isjump;
 
+    public Transform shotpoint;
     public GameObject bullet;
     public int bulletcount;
     float nextshot;
@@ -36,7 +37,7 @@ public class Gun : MonoBehaviour
         if (isshot)
         {
             nextshot -= Time.deltaTime;
-            if(nextshot <= 0)
+            if (nextshot <= 0)
             {
                 nextshot = 0;
                 isshot = false;
@@ -84,19 +85,16 @@ public class Gun : MonoBehaviour
 
     public void Shot()
     {
-        Transform t = null;
-        t.position = gundata.shotpoint;
-
-        if(bulletcount > 0 && !isshot)
+        if (bulletcount > 0 && !isshot)
         {
             Quaternion quar = Quaternion.Euler(0, 0, transform.eulerAngles.z);
 
-            GameObject b = Instantiate(bullet, t.position, quar);
+            GameObject b = Instantiate(bullet, shotpoint.position, quar);
             b.transform.Rotate(0, 0, -90);
-            b.GetComponent<Bullet>().path = t.right;
+            b.GetComponent<Bullet>().path = shotpoint.right;
 
-            rb.AddForce(-t.right * 5f, ForceMode2D.Impulse);
-            
+            rb.AddForce(-shotpoint.right * 5f, ForceMode2D.Impulse);
+
             bulletcount--;
             nextshot = gundata.nextshottime;
             isshot = true;
@@ -105,21 +103,20 @@ public class Gun : MonoBehaviour
 
     public void SetNewData(GunData data)
     {
-        gundata = data;
-
         gameObject.GetComponent<SpriteRenderer>().sprite = data.gunsprite;
-        data.shotpoint = gameObject.transform.InverseTransformPoint(gundata.shotpoint);
+        shotpoint.localPosition = gameObject.transform.InverseTransformPoint(data.shotpoint); // InverseTransformPoint(): 괄호 안 좌표값을 오브젝트의 local값으로 변환
 
-        if(bulletcount >= data.maxbullet)
+        if (bulletcount >= data.maxbullet || bulletcount == 0)
         {
             bulletcount = data.maxbullet;
         }
 
+        gundata = data;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "stage")
+        if (collision.gameObject.tag == "Stage")
         {
             isjump = false;
             rb.drag = 2f;
