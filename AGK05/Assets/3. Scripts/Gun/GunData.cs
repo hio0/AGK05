@@ -12,4 +12,8 @@ public class GunData : ScriptableObject
     public int maxbullet;
 
     public float nextshottime;
+
+    public int bulletdamage;
+
+    public float bulletbackforce;
 }

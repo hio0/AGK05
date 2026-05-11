@@ -21,6 +21,8 @@ public class Gun : MonoBehaviour
     float nextshot;
     bool isshot;
 
+    public Vector2 savepoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,12 +57,12 @@ public class Gun : MonoBehaviour
 
         if (vec == Vector2.left)
         {
-            spinspeed = movespeed * spingajungchi;
+            spinspeed = moving * spingajungchi;
             //rb.velocity = new Vector2(x * movespeed, rb.velocity.y);
         }
         else if (vec == Vector2.right)
         {
-            spinspeed = -movespeed * spingajungchi;
+            spinspeed = -moving * spingajungchi;
         }
         else
         {
@@ -92,8 +94,9 @@ public class Gun : MonoBehaviour
             GameObject b = Instantiate(bullet, shotpoint.position, quar);
             b.transform.Rotate(0, 0, -90);
             b.GetComponent<Bullet>().path = shotpoint.right;
+            b.GetComponent<Bullet>().damage = gundata.bulletdamage;
 
-            rb.AddForce(-shotpoint.right * 5f, ForceMode2D.Impulse);
+            rb.AddForce(-shotpoint.right * gundata.bulletbackforce, ForceMode2D.Impulse);
 
             bulletcount--;
             nextshot = gundata.nextshottime;
@@ -104,7 +107,10 @@ public class Gun : MonoBehaviour
     public void SetNewData(GunData data)
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = data.gunsprite;
-        shotpoint.localPosition = gameObject.transform.InverseTransformPoint(data.shotpoint); // InverseTransformPoint(): 괄호 안 좌표값을 오브젝트의 local값으로 변환
+        Destroy(gameObject.GetComponent<PolygonCollider2D>());
+        gameObject.AddComponent<PolygonCollider2D>();
+
+        shotpoint.localPosition = data.shotpoint;
 
         if (bulletcount >= data.maxbullet || bulletcount == 0)
         {
@@ -116,7 +122,7 @@ public class Gun : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Stage")
+        if (collision.gameObject.tag == "Stage" && collision.gameObject.transform.position.y <= gameObject.transform.position.y)
         {
             isjump = false;
             rb.drag = 2f;

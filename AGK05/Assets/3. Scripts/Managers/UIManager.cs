@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIManager : ManagerManager
 {
     public TMP_Text bulletT;
+    public TMP_Text timerT;
 
     // Start is called before the first frame update
     void Start()
@@ -17,5 +18,6 @@ public class UIManager : ManagerManager
     void Update()
     {
         bulletT.text = gun.bulletcount.ToString();
+        timerT.text = GameManager.Instance.time.ToString("F2");
     }
 }

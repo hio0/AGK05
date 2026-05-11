@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D rb;
 
     public Vector2 path;
+    public int damage;
     float bulletspeed;
 
     // Start is called before the first frame update
