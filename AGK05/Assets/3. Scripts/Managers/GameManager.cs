@@ -12,11 +12,14 @@ public class GameManager : ManagerManager
     public bool isstart;
     public float time;
 
+    public Vector2 savepoint;
+
     private void Awake()
     {
         if(Instance == null)
         {
-            Instance = this; DontDestroyOnLoad(gameObject);
+            Instance = this; 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -39,14 +42,19 @@ public class GameManager : ManagerManager
         }
     }
 
-    public void Save(Vector2 point)
+    public void SetSave(Vector2 point)
     {
-        gun.savepoint = point;
+        savepoint = point;
+    }
+
+    public void BackToSave()
+    {
+        gun.transform.position = savepoint;
     }
 
     public void Clear()
     {
-        gun.movespeed = 0;
+        gun.gundata.movespeed = 0;
         isstart = false;
     }
 }

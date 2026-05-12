@@ -5,6 +5,7 @@ using UnityEngine;
 public class Flag : MonoBehaviour
 {
     public Vector2 save;
+    public bool issaved;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +21,13 @@ public class Flag : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && issaved)
         {
-            gameObject.transform.Find("saved").gameObject.SetActive(true);
-            GameManager.Instance.Save(save);
+            UIManager.UI.FadeOut(gameObject.transform.Find("saved").gameObject, 0.3f, 0.3f);
+
+            gameObject.transform.Find("flag").gameObject.SetActive(true);
+            issaved = true;
+            GameManager.Instance.SetSave(save);
         }
     }
 }

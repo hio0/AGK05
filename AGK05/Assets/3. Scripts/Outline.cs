@@ -20,7 +20,12 @@ public class Outline : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.transform.position = collision.GetComponent<Gun>().savepoint;
+            DamageManager.Damage.ToPlayerWeekDamage();
+        }
+
+        if(collision.gameObject.tag == "Enemy")
+        {
+            DamageManager.Damage.ToEnemyDamage(collision.gameObject.GetComponent<Enemy>().enemydata.hp, collision.gameObject);
         }
     }
 }

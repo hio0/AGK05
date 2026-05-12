@@ -8,9 +8,7 @@ public class Gun : MonoBehaviour
     public GunData gundata;
     public Rigidbody2D rb;
 
-    public float movespeed;
     public float spinspeed;
-    public float spingajungchi;
     public float jumpforce;
 
     bool isjump;
@@ -21,12 +19,11 @@ public class Gun : MonoBehaviour
     float nextshot;
     bool isshot;
 
-    public Vector2 savepoint;
-
     // Start is called before the first frame update
     void Start()
     {
         SetNewData(gundata);
+        GameManager.Instance.SetSave(new Vector2(transform.position.x, transform.position.y + 4f));
     }
 
     void Update()
@@ -49,7 +46,7 @@ public class Gun : MonoBehaviour
 
     public void Move(Vector2 vec)
     {
-        float moving = movespeed;
+        float moving = gundata.movespeed;
         if (isjump)
         {
             moving = moving / 3;
@@ -57,12 +54,12 @@ public class Gun : MonoBehaviour
 
         if (vec == Vector2.left)
         {
-            spinspeed = moving * spingajungchi;
+            spinspeed = moving;
             //rb.velocity = new Vector2(x * movespeed, rb.velocity.y);
         }
         else if (vec == Vector2.right)
         {
-            spinspeed = -moving * spingajungchi;
+            spinspeed = -moving;
         }
         else
         {
