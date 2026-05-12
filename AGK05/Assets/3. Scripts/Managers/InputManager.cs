@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class InputManager : ManagerManager
 {
+    public static InputManager In;
+    public float x;
+
+    private void Awake()
+    {
+        if (In == null)
+        {
+            In = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -11,26 +26,18 @@ public class InputManager : ManagerManager
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        // 이동
-        if(Input.GetKey(KeyCode.A))
-        {
-            gun.Move(Vector2.left);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            gun.Move(Vector2.right);
-        }
+        x = Input.GetAxisRaw("Horizontal");
 
         // 점프
-        if(Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             gun.Jump();
         }
 
         // 발사
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             gun.Shot();
         }

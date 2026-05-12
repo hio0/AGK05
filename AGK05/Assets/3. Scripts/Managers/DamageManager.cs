@@ -49,7 +49,12 @@ public class DamageManager : ManagerManager
 
     public void ToPlayerStrongDamage()
     {
-        gun.SetNewData(defultgundata);
         GameManager.Instance.BackToSave();
+
+        if (GameManager.Instance.isstart)
+        {
+            gun.bulletcount = 0;
+            gun.SetNewData(defultgundata);
+        }
     }
 }

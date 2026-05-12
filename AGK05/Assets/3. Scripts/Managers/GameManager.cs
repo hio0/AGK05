@@ -6,7 +6,7 @@ public class GameManager : ManagerManager
 {
     public static GameManager Instance;
 
-    public GameObject gamep;
+    public GameObject gameP;
     public GameObject clearP;
 
     public bool isstart;
@@ -30,7 +30,7 @@ public class GameManager : ManagerManager
     // Start is called before the first frame update
     void Start()
     {
-        gamep.SetActive(true);
+        gameP.SetActive(true);
         clearP.SetActive(false);
 
         isstart = true;
@@ -57,10 +57,16 @@ public class GameManager : ManagerManager
 
     public void Clear()
     {
-        gun.gundata.movespeed = 0;
         isstart = false;
 
-        gamep.SetActive(false);
+        gun.movespeed = 0;
+        gun.jumpforce = 0;
+        gun.bulletcount = 0;
+
+        gameP.SetActive(false);
         clearP.SetActive(true);
+
+        UIManager.UI.SetTMP(UIManager.UI.cleartimeT, time.ToString("F2"));
+        time = 0;
     }
 }

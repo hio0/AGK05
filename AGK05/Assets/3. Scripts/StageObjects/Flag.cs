@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour
 {
+    public bool useautosavespot;
+
     public Vector2 save;
     public bool issaved;
 
@@ -12,14 +14,17 @@ public class Flag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        save = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2f);
         saveflag.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(useautosavespot)
+        {
+            save = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 2f);
+            useautosavespot = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

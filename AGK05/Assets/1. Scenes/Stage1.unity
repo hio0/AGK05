@@ -338,6 +338,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gundata: {fileID: 11400000, guid: de4550038012b8a4197a2ac21e8a0678, type: 2}
   rb: {fileID: 38892010}
+  movespeed: 0
+  spinspeed: 0
   jumpforce: 6
   shotpoint: {fileID: 1453475395}
   bullet: {fileID: 1329884016279488887, guid: c1ddd381358b7a248a9b3e87f2d24ebe, type: 3}
@@ -2161,6 +2163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 38892014}
+  x: 0
 --- !u!4 &1761500780
 Transform:
   m_ObjectHideFlags: 0
@@ -2192,6 +2195,7 @@ MonoBehaviour:
   bulletT: {fileID: 81615003}
   timerT: {fileID: 103846167}
   saveT: {fileID: 1739009735}
+  cleartimeT: {fileID: 676760911}
 --- !u!114 &1761500782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2205,7 +2209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 38892014}
-  gamep: {fileID: 1238877114}
+  gameP: {fileID: 1238877114}
   clearP: {fileID: 332764595}
   isstart: 0
   time: 0
@@ -2337,6 +2341,10 @@ PrefabInstance:
     - target: {fileID: 3845021794766545242, guid: 5f50d6e26a51e004e87d35a27cee29e0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8541604894194665724, guid: 5f50d6e26a51e004e87d35a27cee29e0, type: 3}
+      propertyPath: useautosavespot
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

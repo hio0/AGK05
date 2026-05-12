@@ -8,11 +8,11 @@ public class Gun : MonoBehaviour
     public GunData gundata;
     public Rigidbody2D rb;
 
-    float spinspeed;
+    public float movespeed;
+    public float spinspeed;
     public float jumpforce;
 
     bool isjump;
-
     public Transform shotpoint;
     public GameObject bullet;
     public int bulletcount;
@@ -44,22 +44,45 @@ public class Gun : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        // 이동
+        if (InputManager.In.x != 0f)
+        {
+            Vector2 vec = new Vector2(InputManager.In.x * movespeed, 0);
+            rb.AddForce(vec);
+            gameObject.transform.Rotate(0, 0, -InputManager.In.x * movespeed);
+        }
+        else
+        {
+            spinspeed = 0;
+        }
+    }
+
     public void Move(Vector2 vec)
     {
-        float moving = gundata.movespeed;
+        float moving = movespeed;
         if (isjump)
         {
-            moving = moving / 3;
+            moving = moving / 3; // 공중에서 이동 줄이기
         }
 
         if (vec == Vector2.left)
         {
             spinspeed = moving;
+            if (movespeed < 2f)
+            {
+                spinspeed = moving * 2f;
+            }
             //rb.velocity = new Vector2(x * movespeed, rb.velocity.y);
         }
         else if (vec == Vector2.right)
         {
-            spinspeed = -moving;
+            spinspeed = moving;
+            if (movespeed < 2f)
+            {
+                spinspeed = moving * 2f;
+            }
         }
         else
         {
@@ -106,6 +129,7 @@ public class Gun : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer>().sprite = data.gunsprite;
         Destroy(gameObject.GetComponent<PolygonCollider2D>());
         gameObject.AddComponent<PolygonCollider2D>();
+        movespeed = data.movespeed;
 
         shotpoint.localPosition = data.shotpoint;
 
@@ -123,7 +147,7 @@ public class Gun : MonoBehaviour
         {
             isjump = false;
             rb.drag = 2f;
-            spinspeed = 0f;
+            //spinspeed = 0f;
         }
     }
 }

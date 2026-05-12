@@ -10,6 +10,7 @@ public class UIManager : ManagerManager
     public TMP_Text bulletT;
     public TMP_Text timerT;
     public TMP_Text saveT;
+    public TMP_Text cleartimeT;
 
     private void Awake()
     {
@@ -52,5 +53,10 @@ public class UIManager : ManagerManager
                 isfadeout = true;
             }
         }
+    }
+
+    public void SetTMP(TMP_Text text, string what)
+    {
+        text.text = what;
     }
 }

@@ -22,9 +22,12 @@ public class GunItem : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if(collision.GetComponent<Gun>().gundata != gundata)
+            Gun gun = collision.GetComponent<Gun>();
+
+            if (gun.gundata != gundata)
             {
-                collision.GetComponent<Gun>().SetNewData(gundata);
+                gun.rb.AddForce(Vector2.up * 3f);
+                gun.SetNewData(gundata);
                 Destroy(gameObject);
             }
         }
