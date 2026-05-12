@@ -30,7 +30,10 @@ public class GameManager : ManagerManager
     // Start is called before the first frame update
     void Start()
     {
-        
+        gamep.SetActive(true);
+        clearP.SetActive(false);
+
+        isstart = true;
     }
 
     // Update is called once per frame
@@ -56,5 +59,8 @@ public class GameManager : ManagerManager
     {
         gun.gundata.movespeed = 0;
         isstart = false;
+
+        gamep.SetActive(false);
+        clearP.SetActive(true);
     }
 }

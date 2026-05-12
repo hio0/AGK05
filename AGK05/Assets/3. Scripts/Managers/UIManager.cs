@@ -9,6 +9,7 @@ public class UIManager : ManagerManager
 
     public TMP_Text bulletT;
     public TMP_Text timerT;
+    public TMP_Text saveT;
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class UIManager : ManagerManager
     // Start is called before the first frame update
     void Start()
     {
-        
+        saveT.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,6 +38,19 @@ public class UIManager : ManagerManager
 
     public void FadeOut(GameObject obj, float startime, float outingtime)
     {
-        obj.SetActive(false);
+        bool isfadeout = false;
+
+        obj.SetActive(true);
+        while (!isfadeout)
+        {
+            startime -= Time.deltaTime;
+
+            if(startime <= 0)
+            {
+                // 대충 페이드 아웃 시키는 코드(근데 시간 없어서 못 짬)
+                obj.SetActive(false);
+                isfadeout = true;
+            }
+        }
     }
 }

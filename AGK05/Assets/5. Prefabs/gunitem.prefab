@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7244373635416602655}
   - component: {fileID: 6842833548590095834}
   m_Layer: 0
-  m_Name: item
+  m_Name: gunitem
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,4 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0136f146b5c6342a2b88e6d0905098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gundata: {fileID: 11400000, guid: de4550038012b8a4197a2ac21e8a0678, type: 2}
+  gundata: {fileID: 11400000, guid: 836b896d6ff460f47a98db43e5647652, type: 2}

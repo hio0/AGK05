@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
     public GunData gundata;
     public Rigidbody2D rb;
 
-    public float spinspeed;
+    float spinspeed;
     public float jumpforce;
 
     bool isjump;
