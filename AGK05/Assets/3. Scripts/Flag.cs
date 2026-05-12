@@ -21,11 +21,12 @@ public class Flag : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && issaved)
+        if (collision.gameObject.tag == "Player" && !issaved)
         {
             UIManager.UI.FadeOut(gameObject.transform.Find("saved").gameObject, 0.3f, 0.3f);
 
             gameObject.transform.Find("flag").gameObject.SetActive(true);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 189, 93, 255);
             issaved = true;
             GameManager.Instance.SetSave(save);
         }
