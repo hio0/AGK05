@@ -37,7 +37,7 @@ public class DamageManager : ManagerManager
 
     public void ToPlayerWeekDamage()
     {
-        if(gun.gundata == defultgundata)
+        if (gun.gundata == defultgundata)
         {
             ToPlayerStrongDamage();
         }
@@ -51,9 +51,8 @@ public class DamageManager : ManagerManager
     {
         GameManager.Instance.BackToSave();
 
-        if (GameManager.Instance.isstart)
+        if(GameManager.Instance.isstart)
         {
-            gun.bulletcount = 0;
             gun.SetNewData(defultgundata);
         }
     }

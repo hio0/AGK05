@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : ManagerManager
 {
@@ -11,6 +12,7 @@ public class UIManager : ManagerManager
     public TMP_Text timerT;
     public TMP_Text saveT;
     public TMP_Text cleartimeT;
+    public Image bulletimebar;
 
     private void Awake()
     {
@@ -37,22 +39,22 @@ public class UIManager : ManagerManager
         timerT.text = GameManager.Instance.time.ToString("F2");
     }
 
-    public void FadeOut(GameObject obj, float startime, float outingtime)
+    public IEnumerator FillAmount(Image image, float maxtime)
     {
-        bool isfadeout = false;
-
-        obj.SetActive(true);
-        while (!isfadeout)
+        while(image.fillAmount > 0)
         {
-            startime -= Time.deltaTime;
-
-            if(startime <= 0)
-            {
-                // 대충 페이드 아웃 시키는 코드(근데 시간 없어서 못 짬)
-                obj.SetActive(false);
-                isfadeout = true;
-            }
+            image.fillAmount -= Time.deltaTime / maxtime;
+            yield return null;
         }
+    }
+
+    public IEnumerator FadeOut(GameObject obj, float startime, float outingtime) // 코루틴은 간단히 말해 실행을 잠깐 씩 끊을 수 있는 함수입니다.
+    {
+        obj.SetActive(true);
+
+        yield return new WaitForSeconds(startime); // yeild return을 이용해 startime 만큼 끊었습니다.
+        
+        obj.SetActive(false);
     }
 
     public void SetTMP(TMP_Text text, string what)

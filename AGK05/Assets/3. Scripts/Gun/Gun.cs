@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
     public float movespeed;
     public float spinspeed;
     public float jumpforce;
+    public float bulletimesecond;
 
     bool isjump;
     public Transform shotpoint;
@@ -28,11 +29,6 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (isjump && rb.velocity.sqrMagnitude > 0) // sqrMagnitude: 움직임을 감지.
-        {
-            transform.Rotate(0, 0, spinspeed);
-        }
-
         if (isshot)
         {
             nextshot -= Time.deltaTime;
@@ -49,16 +45,29 @@ public class Gun : MonoBehaviour
         // 이동
         if (InputManager.In.x != 0f)
         {
-            Vector2 vec = new Vector2(InputManager.In.x * movespeed, 0);
-            rb.AddForce(vec);
-            gameObject.transform.Rotate(0, 0, -InputManager.In.x * movespeed);
+            float moving = movespeed;
+            if (isjump)
+            {
+                moving = moving / 3; // 공중에서 이동 줄이기
+            }
+
+            spinspeed = -InputManager.In.x * moving;
+            if (movespeed <= 6f)
+            {
+                spinspeed = -InputManager.In.x * moving * 1.7f;
+            }
+
+            rb.AddForce(new Vector2(InputManager.In.x * moving, 0));
+            gameObject.transform.Rotate(0, 0, spinspeed);
         }
-        else
+
+        if (isjump && rb.velocity.sqrMagnitude > 0) // sqrMagnitude: 움직임을 감지.
         {
-            spinspeed = 0;
+            transform.Rotate(0, 0, spinspeed);
         }
     }
 
+    /*
     public void Move(Vector2 vec)
     {
         float moving = movespeed;
@@ -93,15 +102,13 @@ public class Gun : MonoBehaviour
         transform.Rotate(0, 0, spinspeed);
     }
 
+    */
     public void Jump()
     {
         if (!isjump)
         {
             //rb.velocity = new Vector2(rb.velocity.x, jumpforce);
             rb.AddForce(Vector2.up * jumpforce, ForceMode2D.Impulse);
-            isjump = true;
-
-            rb.drag = 0.5f;
         }
     }
 
@@ -132,22 +139,34 @@ public class Gun : MonoBehaviour
         movespeed = data.movespeed;
 
         shotpoint.localPosition = data.shotpoint;
+        bulletcount = data.maxbullet;
 
-        if (bulletcount >= data.maxbullet || bulletcount == 0)
-        {
-            bulletcount = data.maxbullet;
-        }
 
         gundata = data;
     }
 
+    public void BulletTime()
+    {
+        UIManager.UI.FillAmount(UIManager.UI.bulletimebar, bulletimesecond);
+        Time.timeScale = 0.8f;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Stage" && collision.gameObject.transform.position.y <= gameObject.transform.position.y)
+        if (collision.gameObject.tag == "Stage" && collision.gameObject.transform.position.y < gameObject.transform.position.y)
         {
             isjump = false;
             rb.drag = 2f;
             //spinspeed = 0f;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Stage" && collision.gameObject.transform.position.y < gameObject.transform.position.y)
+        {
+            isjump = true;
+            rb.drag = 0.5f;
         }
     }
 }

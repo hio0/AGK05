@@ -13,10 +13,6 @@ public class InputManager : ManagerManager
         {
             In = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     // Start is called before the first frame update
@@ -28,6 +24,7 @@ public class InputManager : ManagerManager
     // Update is called once per frame
     private void Update()
     {
+
         x = Input.GetAxisRaw("Horizontal");
 
         // 점프
@@ -40,6 +37,12 @@ public class InputManager : ManagerManager
         if (Input.GetKeyDown(KeyCode.Space))
         {
             gun.Shot();
+        }
+
+        // 불렛타임
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            gun.BulletTime();
         }
     }
 }

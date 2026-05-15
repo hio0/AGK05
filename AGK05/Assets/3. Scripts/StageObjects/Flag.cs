@@ -31,7 +31,7 @@ public class Flag : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && !issaved)
         {
-            UIManager.UI.FadeOut(UIManager.UI.saveT.gameObject, 6f, 0.5f);
+            StartCoroutine(UIManager.UI.FadeOut(UIManager.UI.saveT.gameObject, 2f, 0.5f));
 
             saveflag.SetActive(true);
             issaved = true;

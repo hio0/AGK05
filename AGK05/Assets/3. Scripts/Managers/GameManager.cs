@@ -8,6 +8,7 @@ public class GameManager : ManagerManager
 
     public GameObject gameP;
     public GameObject clearP;
+    public Transform items;
 
     public bool isstart;
     public float time;
@@ -53,15 +54,21 @@ public class GameManager : ManagerManager
     public void BackToSave()
     {
         gun.transform.position = savepoint;
+
+        for(int i = 0;i< items.childCount; i++)
+        {
+            if (items.GetChild(i).gameObject.activeSelf == false)
+            {
+                items.GetChild(i).gameObject.SetActive(true);
+            }
+        }
     }
 
     public void Clear()
     {
         isstart = false;
 
-        gun.movespeed = 0;
-        gun.jumpforce = 0;
-        gun.bulletcount = 0;
+        InputManager.In.enabled = false;
 
         gameP.SetActive(false);
         clearP.SetActive(true);

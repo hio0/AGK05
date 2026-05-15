@@ -25,7 +25,7 @@ public class ReloadItem : MonoBehaviour
             if(gun.bulletcount != gun.gundata.maxbullet)
             {
                 gun.bulletcount = gun.gundata.maxbullet;
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

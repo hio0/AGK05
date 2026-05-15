@@ -28,7 +28,7 @@ public class GunItem : MonoBehaviour
             {
                 gun.rb.AddForce(Vector2.up * 3f);
                 gun.SetNewData(gundata);
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }
