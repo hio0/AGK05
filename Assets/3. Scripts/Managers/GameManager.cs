@@ -55,8 +55,6 @@ public class GameManager : ManagerManager
     {
         gun.transform.position = savepoint;
 
-        gun.spinspeed = 0f;
-
         for(int i = 0;i< items.childCount; i++)
         {
             if (items.GetChild(i).gameObject.activeSelf == false)
@@ -70,9 +68,7 @@ public class GameManager : ManagerManager
     {
         isstart = false;
 
-        InputManager.In.x = 0;
         InputManager.In.enabled = false;
-        gun.spinspeed = 0;
 
         gameP.SetActive(false);
         clearP.SetActive(true);

@@ -26,7 +26,7 @@ public class GunItem : MonoBehaviour
 
             if (gun.gundata != gundata)
             {
-                gun.rb.AddForce(Vector2.up * 3f,ForceMode2D.Impulse);
+                gun.rb.AddForce(Vector2.up * 3f);
                 gun.SetNewData(gundata);
                 gameObject.SetActive(false);
             }

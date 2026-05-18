@@ -54,17 +54,16 @@ public class Gun : MonoBehaviour
             spinspeed = -InputManager.In.x * moving;
             if (movespeed <= 6f)
             {
-                spinspeed = -InputManager.In.x * moving * 2f;
+                spinspeed = -InputManager.In.x * moving * 1.7f;
             }
 
             rb.AddForce(new Vector2(InputManager.In.x * moving, 0));
-            //rb.velocity = new Vector2(InputManager.In.x * moving, rb.velocity.y);
-            //transform.Translate(moving, 0, 0);
+            gameObject.transform.Rotate(0, 0, spinspeed);
         }
 
-        if (Mathf.Abs(rb.velocity.x) >= 2f) // 절댓값
+        if (isjump && rb.velocity.sqrMagnitude > 0) // sqrMagnitude: 움직임을 감지.
         {
-            rb.MoveRotation(rb.rotation + spinspeed);
+            transform.Rotate(0, 0, spinspeed);
         }
     }
 
@@ -144,6 +143,12 @@ public class Gun : MonoBehaviour
 
 
         gundata = data;
+    }
+
+    public void BulletTime()
+    {
+        UIManager.UI.FillAmount(UIManager.UI.bulletimebar, bulletimesecond);
+        Time.timeScale = 0.8f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
