@@ -25,7 +25,7 @@ public class Outline : MonoBehaviour
 
         if(collision.gameObject.tag == "Enemy")
         {
-            DamageManager.Damage.ToEnemyDamage(collision.gameObject.GetComponent<Enemy>().enemydata.hp, collision.gameObject);
+            DamageManager.Damage.ToEnemyDamage(collision.gameObject.GetComponent<Enemy>().hp, collision.gameObject);
         }
     }
 }

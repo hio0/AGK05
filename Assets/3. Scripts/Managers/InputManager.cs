@@ -42,7 +42,12 @@ public class InputManager : ManagerManager
         // 불렛타임
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            gun.BulletTime();
+            gun.isbulletime = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            gun.isbulletime = false;
+            gun.bulletchargelock = 1.5f;
         }
     }
 }

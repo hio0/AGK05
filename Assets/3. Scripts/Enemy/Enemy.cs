@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,37 +9,36 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D rb;
 
     public int hp;
+    public bool canmaove;
+    public Action moveing;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.GetComponent<SpriteRenderer>().sprite = enemydata.enemysprite;
         hp = enemydata.hp;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemydata.hp <= 0)
+        if (hp <= 0)
         {
             DamageManager.Damage.EnemyDie(gameObject);
         }
+
+        if(canmaove && moveing != null)
+        {
+            moveing();
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             DamageManager.Damage.ToPlayerWeekDamage();
-
-            float x = collision.transform.position.x - gameObject.transform.position.x + 0.00001f; // 왜 0.00001f를 더할까요 ??
-            if(x > 0)
-            {
-                rb.AddForce(Vector2.right * enemydata.pushforce);
-            }
-            else if(x < 0)
-            {
-                rb.AddForce(Vector2.left * enemydata.pushforce);
-            }
+            DamageManager.Damage.EnemyDie(gameObject);
         }
     }
 }

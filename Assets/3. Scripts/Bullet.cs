@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Destroy(gameObject);
+            DamageManager.Damage.ToEnemyDamage(damage, collision.gameObject);
         }
     }
 

@@ -39,16 +39,26 @@ public class UIManager : ManagerManager
         timerT.text = GameManager.Instance.time.ToString("F2");
     }
 
-    public IEnumerator FillAmount(Image image, float maxtime)
+    public void FillAmount(Image image, float maxtime, bool isplus)
     {
-        while(image.fillAmount > 0)
+        if(isplus)
         {
-            image.fillAmount -= Time.deltaTime / maxtime;
-            yield return null;
+            if(image.fillAmount < 1)
+            {
+                image.fillAmount = gun.bulletimesecond / maxtime;
+                Debug.Log(gun.bulletimesecond / maxtime);
+            }
+        }
+        else
+        {
+            if(image.fillAmount > 0)
+            {
+                image.fillAmount -= Time.deltaTime * 20 / maxtime;
+            }
         }
     }
 
-    public IEnumerator FadeOut(GameObject obj, float startime, float outingtime) // 코루틴은 간단히 말해 실행을 잠깐 씩 끊을 수 있는 함수입니다.
+    public IEnumerator FadeOut(GameObject obj, float startime) // 코루틴은 간단히 말해 실행을 잠깐 씩 끊을 수 있는 함수입니다.
     {
         obj.SetActive(true);
 

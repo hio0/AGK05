@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Stage
   - OutLine
+  - Edge
   layers:
   - Default
   - TransparentFX

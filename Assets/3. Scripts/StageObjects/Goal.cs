@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
+    public GameObject saveflag;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        saveflag.SetActive(false);
     }
 
     // Update is called once per frame
@@ -21,6 +23,7 @@ public class Goal : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             GameManager.Instance.Clear();
+            saveflag.SetActive(true);
         }
     }
 }

@@ -20,6 +20,12 @@ public class Gun : MonoBehaviour
     float nextshot;
     bool isshot;
 
+    public bool isbulletime;
+    public float maxbulletime;
+    public float bulletcharge;
+    public float bulletchargelock;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +44,31 @@ public class Gun : MonoBehaviour
                 isshot = false;
             }
         }
+
+        if(isbulletime)
+        {
+            BulletTime();
+        }
+        else
+        {
+            if(bulletimesecond != maxbulletime)
+            {
+                Time.timeScale = 1f;
+
+                bulletchargelock -= Time.deltaTime;
+                if (bulletchargelock <= 0)
+                {
+                    bulletimesecond += Time.deltaTime *  bulletcharge;
+                    UIManager.UI.FillAmount(UIManager.UI.bulletimebar, maxbulletime, true);
+
+                    if (bulletimesecond >= maxbulletime)
+                    {
+                        bulletimesecond = maxbulletime;
+                        StartCoroutine(UIManager.UI.FadeOut(UIManager.UI.bulletimebar.gameObject, 1.5f));
+                    }
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -54,16 +85,18 @@ public class Gun : MonoBehaviour
             spinspeed = -InputManager.In.x * moving;
             if (movespeed <= 6f)
             {
-                spinspeed = -InputManager.In.x * moving * 1.7f;
+                spinspeed = -InputManager.In.x * moving * 2f; // movespeed가 작은 총들은 회전이 불가하여 보정치 추가
             }
 
             rb.AddForce(new Vector2(InputManager.In.x * moving, 0));
-            gameObject.transform.Rotate(0, 0, spinspeed);
+            //rb.velocity = new Vector2(InputManager.In.x * moving, rb.velocity.y);
+            //transform.Translate(moving, 0, 0);
         }
 
-        if (isjump && rb.velocity.sqrMagnitude > 0) // sqrMagnitude: 움직임을 감지.
+        if (Mathf.Abs(rb.velocity.x) >= 2f) // 절댓값
         {
-            transform.Rotate(0, 0, spinspeed);
+            rb.MoveRotation(rb.rotation + spinspeed);
+            //transform.Rotate(0, 0, spinspeed);
         }
     }
 
@@ -147,8 +180,19 @@ public class Gun : MonoBehaviour
 
     public void BulletTime()
     {
-        UIManager.UI.FillAmount(UIManager.UI.bulletimebar, bulletimesecond);
-        Time.timeScale = 0.8f;
+        if(bulletimesecond > 0)
+        {
+            UIManager.UI.bulletimebar.gameObject.SetActive(true);
+
+            bulletimesecond -= Time.deltaTime * 20;
+            UIManager.UI.FillAmount(UIManager.UI.bulletimebar, maxbulletime, false);
+            Time.timeScale = 0.5f;
+        }
+        else
+        {
+            isbulletime = false;
+            return;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
