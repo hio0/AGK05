@@ -46,7 +46,6 @@ public class UIManager : ManagerManager
             if(image.fillAmount < 1)
             {
                 image.fillAmount = gun.bulletimesecond / maxtime;
-                Debug.Log(gun.bulletimesecond / maxtime);
             }
         }
         else

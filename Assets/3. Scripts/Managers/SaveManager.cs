@@ -10,7 +10,7 @@ public class Data
     public float savepointx;
     public GunData gundata;
     public float time;
-    public int stage;
+    public string stage;
 }
 
 public class SaveManager : MonoBehaviour
@@ -18,6 +18,9 @@ public class SaveManager : MonoBehaviour
     public static SaveManager Save;
 
     public Data data;
+    public string filename;
+
+    public bool issavegame;
 
     private void Awake()
     {
@@ -34,12 +37,14 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
-        GetAllData();
+        
     }
 
 
-    public void SaveData(float a, GunData b, float t, int d)
+    public void NewData(float a, GunData b, float t, string d)
     {
+        Debug.Log("newdata");
+
         data.savepointx = a;
         data.gundata = b;
         data.time = t;
@@ -47,14 +52,35 @@ public class SaveManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data); // 데이터를 json으로 변환
 
-        DateTime now = DateTime.Now;
-        string filepath = Path.Combine(Application.persistentDataPath, $"{now.Year}-{now.Month}-{now.Date}"); // 저장 장소 및 이름 설정.
+        string[] files = Directory.GetFiles(Application.persistentDataPath);
+        string filepath = Path.Combine(Application.persistentDataPath, files.Length.ToString() + ".json"); // 저장 장소 및 이름 설정.
+        Debug.Log(filepath);
         File.WriteAllText(filepath, json); // 저장
+        filename = files.Length.ToString() + ".json";
+
+        MainManager.Main.SaveSlotSet(Path.GetFileNameWithoutExtension(filepath), data.time, data.gundata.gunsprite); // 세이브 슬롯 만듬.
+    }
+
+    public void SaveData(float a, GunData b, float t, string d)
+    {
+        Debug.Log("savedata");
+
+        data.savepointx = a;
+        data.gundata = b;
+        data.time = t;
+        data.stage = d;
+        Debug.Log(data.time);
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, filename), json);
+
+        // 덮어쓰기
     }
 
     public void GetAllData()
     {
         string[] files = Directory.GetFiles(Application.persistentDataPath); // 경로 내 모든 파일 저장
+        Debug.Log(files.Length);
 
         foreach (string file in files) // 모든 파일 탐색
         {
@@ -65,8 +91,14 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public (float spx, GunData gd, float tm, int stgn) SetData(float a, GunData b, float t, int d, string filename)
+    public (float spx, GunData gd, float tm) SetData(float a, GunData b, float t)
     {
-        return (a, b, t, d);
+        Debug.Log("setdata");
+
+        a = data.savepointx;
+        b = data.gundata;
+        t = data.time;
+
+        return (a, b, t);
     }
 }

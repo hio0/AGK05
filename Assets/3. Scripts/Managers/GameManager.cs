@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : ManagerManager
 {
@@ -31,6 +33,15 @@ public class GameManager : ManagerManager
     // Start is called before the first frame update
     void Start()
     {
+        if (SaveManager.Save.issavegame)
+        {
+            SaveManager.Save.SetData(savepoint.x, gun.gundata, time);
+        }
+        else
+        {
+            SaveManager.Save.NewData(savepoint.x, gun.gundata, time, SceneManager.GetActiveScene().name);
+        }
+
         gameP.SetActive(true);
         clearP.SetActive(false);
 
@@ -80,11 +91,27 @@ public class GameManager : ManagerManager
         InputManager.In.x = 0;
         InputManager.In.enabled = false;
         gun.spinspeed = 0;
+        enemys.gameObject.SetActive(false);
 
         gameP.SetActive(false);
         clearP.SetActive(true);
 
         UIManager.UI.SetTMP(UIManager.UI.cleartimeT, time.ToString("F2"));
-        time = 0;
+    }
+
+    public void BackToMain()
+    {
+        SaveData();
+        SceneManager.LoadScene("Main");
+    }
+
+    public void NextStage()
+    {
+        SaveData();
+    }
+
+    public void SaveData()
+    {
+        SaveManager.Save.SaveData(savepoint.x, gun.gundata, time, SceneManager.GetActiveScene().name);
     }
 }
