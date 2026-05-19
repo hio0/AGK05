@@ -9,6 +9,7 @@ public class GameManager : ManagerManager
     public GameObject gameP;
     public GameObject clearP;
     public Transform items;
+    public Transform enemys;
 
     public bool isstart;
     public float time;
@@ -20,7 +21,6 @@ public class GameManager : ManagerManager
         if(Instance == null)
         {
             Instance = this; 
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -61,6 +61,14 @@ public class GameManager : ManagerManager
             if (items.GetChild(i).gameObject.activeSelf == false)
             {
                 items.GetChild(i).gameObject.SetActive(true);
+            }
+        }
+
+        for (int i = 0; i < enemys.childCount; i++)
+        {
+            if (enemys.GetChild(i).gameObject.activeSelf == false)
+            {
+                enemys.GetChild(i).gameObject.SetActive(true);
             }
         }
     }

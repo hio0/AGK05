@@ -8,7 +8,7 @@ public class NormalEnemy : MonoBehaviour
 
     float randomtimer;
     float x;
-    bool goleft;
+    bool goright;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +16,6 @@ public class NormalEnemy : MonoBehaviour
         enemy = GetComponent<Enemy>();
 
         randomtimer = Random.Range(5f, 20f);
-        x = -enemy.enemydata.movespeed;
 
         enemy.canmaove = true;
         enemy.moveing += Moving;
@@ -31,20 +30,20 @@ public class NormalEnemy : MonoBehaviour
         {
             randomtimer = Random.Range(5f, 20f);
 
-            if(goleft)
+            if(goright)
             {
-                goleft = false;
+                goright = false;
             }
             else
             {
-                goleft = true;
+                goright = true;
             }
         }
     }
 
     public void Moving()
     {
-        if(!goleft)
+        if(goright)
         {
             x = enemy.enemydata.movespeed;
         }

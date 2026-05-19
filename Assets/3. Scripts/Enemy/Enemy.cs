@@ -37,8 +37,8 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            DamageManager.Damage.ToPlayerWeekDamage();
             DamageManager.Damage.EnemyDie(gameObject);
+            DamageManager.Damage.ToPlayerWeekDamage();
         }
     }
 }

@@ -743,6 +743,7 @@ Transform:
   - {fileID: 6158329552302870733}
   - {fileID: 1430504854}
   - {fileID: 756417125}
+  - {fileID: 1346369877}
   - {fileID: 3035224497497428705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1818,6 +1819,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238877114}
   m_CullTransparentMesh: 1
+--- !u!1 &1346369876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346369877}
+  m_Layer: 0
+  m_Name: enemys
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1346369877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346369876}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1952256422}
+  m_Father: {fileID: 179401079}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1430504854 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3845021794766545242, guid: 5f50d6e26a51e004e87d35a27cee29e0, type: 3}
@@ -2334,7 +2367,7 @@ GameObject:
   - component: {fileID: 1761500782}
   - component: {fileID: 1761500783}
   m_Layer: 0
-  m_Name: ManagerObject
+  m_Name: GameManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2403,6 +2436,7 @@ MonoBehaviour:
   gameP: {fileID: 1238877114}
   clearP: {fileID: 332764595}
   items: {fileID: 756417125}
+  enemys: {fileID: 1346369877}
   isstart: 0
   time: 0
   savepoint: {x: 0, y: 0}
@@ -2578,12 +2612,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952256418}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 15.64, y: 0.3, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1346369877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1952256423
 MonoBehaviour:
@@ -3218,4 +3252,3 @@ SceneRoots:
   - {fileID: 207163296}
   - {fileID: 321370363}
   - {fileID: 1761500780}
-  - {fileID: 1952256422}

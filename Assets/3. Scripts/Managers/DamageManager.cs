@@ -32,7 +32,7 @@ public class DamageManager : ManagerManager
 
     public void EnemyDie(GameObject enemy)
     {
-        Destroy(enemy);
+        enemy.SetActive(false);
     }
 
     public void ToPlayerWeekDamage()
