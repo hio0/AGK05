@@ -8,6 +8,8 @@ public class GameManager : ManagerManager
 {
     public static GameManager Instance;
 
+    public bool issaved;
+
     public GameObject gameP;
     public GameObject clearP;
     public Transform items;
@@ -18,11 +20,24 @@ public class GameManager : ManagerManager
 
     public Vector2 savepoint;
 
-    private void Awake()
+    private void Awake() // Awake는 오브젝트가 활성화되거나 씬에 생성될 때 가장 먼저 호출(Active도 따지지 않고 무조건 첫빠따)
     {
         if(Instance == null)
         {
-            Instance = this; 
+            Instance = this;
+
+            if (SaveManager.Save.issavegame)
+            {
+                savepoint = new Vector2(SaveManager.Save.SetData().spx, gun.transform.position.y);
+                Debug.Log(savepoint);
+                gun.gundata = SaveManager.Save.SetData().gd;
+                time = SaveManager.Save.SetData().tm;
+            }
+            else
+            {
+                SaveManager.Save.NewData(savepoint.x, gun.gundata, time, SceneManager.GetActiveScene().name);
+                SetSave(new Vector2(gun.transform.position.x, gun.transform.position.y + 4f));
+            }
         }
         else
         {
@@ -33,15 +48,7 @@ public class GameManager : ManagerManager
     // Start is called before the first frame update
     void Start()
     {
-        if (SaveManager.Save.issavegame)
-        {
-            SaveManager.Save.SetData(savepoint.x, gun.gundata, time);
-        }
-        else
-        {
-            SaveManager.Save.NewData(savepoint.x, gun.gundata, time, SceneManager.GetActiveScene().name);
-        }
-
+        BackToSave();
         gameP.SetActive(true);
         clearP.SetActive(false);
 

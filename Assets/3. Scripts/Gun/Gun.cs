@@ -30,7 +30,6 @@ public class Gun : MonoBehaviour
     void Start()
     {
         SetNewData(gundata);
-        GameManager.Instance.SetSave(new Vector2(transform.position.x, transform.position.y + 4f));
     }
 
     void Update()

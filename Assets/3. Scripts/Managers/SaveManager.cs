@@ -69,7 +69,6 @@ public class SaveManager : MonoBehaviour
         data.gundata = b;
         data.time = t;
         data.stage = d;
-        Debug.Log(data.time);
 
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Path.Combine(Application.persistentDataPath, filename), json);
@@ -91,14 +90,10 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public (float spx, GunData gd, float tm) SetData(float a, GunData b, float t)
+    public (float spx, GunData gd, float tm) SetData()
     {
         Debug.Log("setdata");
 
-        a = data.savepointx;
-        b = data.gundata;
-        t = data.time;
-
-        return (a, b, t);
+        return (data.savepointx, data.gundata, data.time);
     }
 }
