@@ -11,12 +11,16 @@ public class Enemy : MonoBehaviour
     public int hp;
     public bool canmaove;
     public Action moveing; // Action은 Deligate의 일종입니다. Deligate는 함수를 넣을 수 있는 변수인 느낌이고, 선언이 귀찮기에 매개변수가 없는/있는 함수를 저장 가능한 Action과 Func로 간단하게 사용 가능합니다.
+    Vector2 startpos;
 
     // Start is called before the first frame update
     void Start()
     {
         gameObject.GetComponent<SpriteRenderer>().sprite = enemydata.enemysprite;
         hp = enemydata.hp;
+
+        startpos = gameObject.transform.position;
+        Reset();
     }
 
     // Update is called once per frame
@@ -40,5 +44,11 @@ public class Enemy : MonoBehaviour
             DamageManager.Damage.EnemyDie(gameObject);
             DamageManager.Damage.ToPlayerWeekDamage();
         }
+    }
+
+    public void Reset()
+    {
+        gameObject.SetActive(true);
+        gameObject.transform.position = startpos;
     }
 }

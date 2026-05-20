@@ -81,10 +81,10 @@ public class Gun : MonoBehaviour
                 moving = moving / 3; // 공중에서 이동 줄이기
             }
 
-            spinspeed = -InputManager.In.x * moving;
+            spinspeed = -InputManager.In.x * moving / 2;
             if (movespeed <= 6f)
             {
-                spinspeed = -InputManager.In.x * moving * 2f; // movespeed가 작은 총들은 회전이 불가하여 보정치 추가
+                spinspeed = -InputManager.In.x * moving; // movespeed가 작은 총들은 회전이 불가하여 보정치 추가
             }
 
             rb.AddForce(new Vector2(InputManager.In.x * moving, 0));
@@ -92,10 +92,9 @@ public class Gun : MonoBehaviour
             //transform.Translate(moving, 0, 0);
         }
 
-        if (Mathf.Abs(rb.velocity.x) >= 2f) // 절댓값
+        if (Mathf.Abs(rb.velocity.x) >= 1.5f) // 절댓값
         {
             rb.MoveRotation(rb.rotation + spinspeed);
-            //transform.Rotate(0, 0, spinspeed);
         }
     }
 

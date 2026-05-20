@@ -16,6 +16,7 @@ public class GameManager : ManagerManager
     public Transform enemys;
 
     public bool isstart;
+    float savetime;
     public float time;
 
     public Vector2 savepoint;
@@ -29,7 +30,6 @@ public class GameManager : ManagerManager
             if (SaveManager.Save.issavegame)
             {
                 savepoint = new Vector2(SaveManager.Save.SetData().spx, gun.transform.position.y);
-                Debug.Log(savepoint);
                 gun.gundata = SaveManager.Save.SetData().gd;
                 time = SaveManager.Save.SetData().tm;
             }
@@ -67,6 +67,9 @@ public class GameManager : ManagerManager
     public void SetSave(Vector2 point)
     {
         savepoint = point;
+        savetime = time;
+
+        SaveData();
     }
 
     public void BackToSave()
@@ -86,7 +89,7 @@ public class GameManager : ManagerManager
         {
             if (enemys.GetChild(i).gameObject.activeSelf == false)
             {
-                enemys.GetChild(i).gameObject.SetActive(true);
+                enemys.GetChild(i).gameObject.GetComponent<Enemy>().Reset();
             }
         }
     }
@@ -108,17 +111,16 @@ public class GameManager : ManagerManager
 
     public void BackToMain()
     {
-        SaveData();
         SceneManager.LoadScene("Main");
     }
 
     public void NextStage()
     {
-        SaveData();
+        
     }
 
     public void SaveData()
     {
-        SaveManager.Save.SaveData(savepoint.x, gun.gundata, time, SceneManager.GetActiveScene().name);
+        SaveManager.Save.SaveData(savepoint.x, gun.gundata, savetime, SceneManager.GetActiveScene().name);
     }
 }

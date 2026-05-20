@@ -7,6 +7,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class EnemyData : ScriptableObject
 {
+    // 적 이름
+    new public string name;
+
     // 적 외형
     public Sprite enemysprite;
 
