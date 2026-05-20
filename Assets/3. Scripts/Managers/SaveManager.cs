@@ -50,7 +50,7 @@ public class SaveManager : MonoBehaviour
         data.time = t;
         data.stage = d;
 
-        string json = JsonUtility.ToJson(data); // 데이터를 json으로 변환
+        string json = JsonUtility.ToJson(data, true); // 데이터를 json으로 변환
 
         string[] files = Directory.GetFiles(Application.persistentDataPath);
         string filepath = Path.Combine(Application.persistentDataPath, files.Length.ToString() + ".json"); // 저장 장소 및 이름 설정.
@@ -70,7 +70,7 @@ public class SaveManager : MonoBehaviour
         data.time = t;
         data.stage = d;
 
-        string json = JsonUtility.ToJson(data);
+        string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(Path.Combine(Application.persistentDataPath, filename), json);
 
         // 덮어쓰기

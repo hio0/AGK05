@@ -57,7 +57,7 @@ public class MainManager : MonoBehaviour
         pre.transform.GetChild(0).GetComponent<TMP_Text>().text = name;
         pre.transform.GetChild(1).GetComponent<TMP_Text>().text = time.ToString("F2");
         pre.transform.GetChild(2).GetComponent<Image>().sprite = sprite;
-        pre.GetComponent<Button>().onClick.AddListener(() => SavedGame(pre.GetComponent<Button>()));
+        pre.GetComponent<Button>().onClick.AddListener(() => SavedGame(pre.GetComponent<Button>())); // OnClick에 AddListener을 넣는건 람다식으로 구현해야 합니다. 람다식은 그냥 간이 함수인걸로 알고있는데 어떻게 이렇게 동작하는지는 공부 예정...
     }
 
     public void NewGame()
